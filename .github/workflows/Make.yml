@@ -103,8 +103,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
-        name: ${{ github.event.inputs.DEVICE_NAME }}
+        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
-        body: TWRP Recovery for ${{ github.event.inputs.DEVICE_NAME }}
+        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

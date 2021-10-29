@@ -7,6 +7,7 @@
 - 优化制作逻辑，简化流程、增强兼容性
 - 优化制作体验，重写参数传递方式，方便使用
 - 重写 README.md
+- 完全重构使用逻辑，降低使用难度
 - 支持 OrangeFox、SHRP 等的制作 (试验型功能)
 ```
 
@@ -15,9 +16,9 @@
 ## 参数说明
 
 | 名称 | 描述 | 示例 |
-| ------------ | ------------ | ------------ |
+| ------------ | ---------------- | ------------ |
 | `LIBRARY_NAME` | 使用的源码类型 | omni |
-| `LIBRARY_URL` | 使用的源码地址 | git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git |
+| `LIBRARY_URL` | 使用的源码地址 | https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git |
 | `LIBRARY_BRANCH` | 使用的源码分支 | twrp-9.0 |
 | `DEVICE_URL` | 使用的设备树地址 | https://github.com/azwhikaru/twrp_device_xiaomi_archytas |
 | `DEVICE_BRANCH` | 使用的设备树分支 | twrp-9.0 |
