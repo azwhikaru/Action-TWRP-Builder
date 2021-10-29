@@ -30,15 +30,15 @@
 ```
 例如你的用户名为: Fun-114514
 ```
-### 1、点击本仓库右上角的 'Fork'
+#### 1、点击本仓库右上角的 'Fork'
 ![](https://i.bmp.ovh/imgs/2021/10/6b6ed9f29e732372.png)
-### 2、等待自动跳转后，你会看到你自己的用户名
+#### 2、等待自动跳转后，你会看到你自己的用户名
 ![](https://i.bmp.ovh/imgs/2021/10/66cfe324c0ebb69b.png)
-### 3、点击 'Actions - Make Recovery'
+#### 3、点击 'Actions - Make Recovery'
 ![](https://i.bmp.ovh/imgs/2021/10/23896d1b66292047.png)
-### 4、点击 'Run workflow' 并按照上文 '参数说明' 填写
+#### 4、点击 'Run workflow' 并按照上文 '参数说明' 填写
 ![](https://i.bmp.ovh/imgs/2021/10/9cb7871267cf2f53.png)
-### 5、填写完成后点击 'Run workflow' 开始运行
+#### 5、填写完成后点击 'Run workflow' 开始运行
 
 ------
 
