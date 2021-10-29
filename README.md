@@ -1,6 +1,6 @@
 # 使用 Github Action 编译 Recovery
 ```
-支持 OFRP、SHRP 制作、TWRP 编译制作
+支持 OFRP、SHRP、TWRP 编译制作
 ```
 ---
 
