@@ -15,10 +15,6 @@ on:
         description: 'LIBRARY_BRANCH'
         required: true
         default: 'twrp-9.0'
-      DEVICE_REMOTE:
-        description: 'DEVICE_REMOTE'
-        required: true
-        default: 'github'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true

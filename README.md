@@ -1,38 +1,46 @@
-<h1 align="center"> 利用 Github Actions 编译 Recovery</h1>
+# 使用 Github Action 编译 Recovery
 
----
+## 更新说明
+```
+2021/10/29: 
+- 重构 2.0 版本
+- 优化制作逻辑，简化流程、增强兼容性
+- 优化制作体验，重写参数传递方式，方便使用
+- 重写 README.md
+- 支持 OrangeFox、SHRP 等的制作 (试验型功能)
+```
 
-<p align="center">
-	Use Github Action to build recovery
-</p>
+-----
 
+## 参数说明
 
-## 配置
+| 名称 | 描述 | 示例 |
+| ------------ | ------------ | ------------ |
+| `LIBRARY_NAME` | 使用的源码类型 | omni |
+| `LIBRARY_URL` | 使用的源码地址 | git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git |
+| `LIBRARY_BRANCH` | 使用的源码分支 | twrp-9.0 |
+| `DEVICE_URL` | 使用的设备树地址 | https://github.com/azwhikaru/twrp_device_xiaomi_archytas |
+| `DEVICE_BRANCH` | 使用的设备树分支 | twrp-9.0 |
+| `DEVICE_PATH` | 使用的设备树的位置 | device/xiaomi/Archytas |
+| `DEVICE_NAME` | 要编译的机型的名称 | Archytas |
 
-配置文件位于仓库根目录 [Config.json](config.json)
+-----
 
-| 名称               | 类型    | 描述                                                         |
-| ------------------ | ------- | ------------------------------------------------------------ |
-| `twrp_url`     | String  | 编译使用的源码地址                                        |
-| `twrp_branch`  | String  | 编译使用的源码分支                                        |
-| `git_username` | String  | Git 的用户名                                            |
-| `git_email`    | String  | Git 的邮箱<sub>（Github 可使用`Github ID + Github用户名@users.noreply.github.com`）</sub> |
-| `use_own_dt`   | Boolean | 指示是否使用个人设备树<sub>（此项为 `true` 后以下三项起效）</sub>  |
-| `dt_url`           | String  | 您使用的设备树的地址<sub>（格式: `USER/REPO` ）</sub>                |
-| `dt_branch`    | String  | 您使用的设备树的分支                                         |
-| `dt_remote`        | String  | 您使用设备树的存储库<sub>（如 `github/gitlab` ）</sub>               |
-| `dt_path`      | String  | 指示设备树本地保存位置<sub>（示例 `device/huawei/kiwi` ）</sub>      |
-| `device_code`  | String  | 您将要编译机型的机型代号                                     |
-| `use_omin_head`  | Boolean  | 指示设备树的 `*.mk` 文件是否包含 `omni_` 头<sub>（例如你的 `*.mk` 文件如同 `omni_kiwi.mk` 则需开启此选项）</sub>                                     |
-| `use_repair_manifest`  | Boolean | 是否下载修复环境<sub>（注意，此项目为后面三项的前置条件。此项为 `true` 后以下四项起效） </sub>                              |
-| `fix_product`  | Boolean | 指示是否修复无法找到设备的问题                               |
-| `fix_misscom`  | Boolean | 指示是否修复缺少 `device/qcom/common` 的问题                   |
-| `fix_busybox`      | Boolean | 指示是否修复缺少 `busybox` 的问题                              |
-| `fix_branch`       | String  | 指示修复以上问题所使用的分支<sub>（你一般无需修改此项，只需要替换 `Android` 版本对应分支即可） </sub>                                 |
+## 如何使用
+```
+例如你的用户名为: Fun-114514
+```
+### 1、点击本仓库右上角的 'Fork'
+![](https://i.bmp.ovh/imgs/2021/10/6b6ed9f29e732372.png)
+### 2、等待自动跳转后，你会看到你自己的用户名
+![](https://i.bmp.ovh/imgs/2021/10/66cfe324c0ebb69b.png)
+### 3、点击 'Actions - Make Recovery'
+![](https://i.bmp.ovh/imgs/2021/10/23896d1b66292047.png)
+### 4、点击 'Run workflow' 并按照上文 '参数说明' 填写
+![](https://i.bmp.ovh/imgs/2021/10/9cb7871267cf2f53.png)
+### 5、填写完成后点击 'Run workflow' 开始运行
 
-## 开始
-
-Fork 此仓库后，修改 [Config.json](config.json)，点击右上角 Star 就会开始，你可以在 [Worker](../../actions) 界面查看进度
+------
 
 ## 编译结果
 可以在 [Release](../../releases) 下载
