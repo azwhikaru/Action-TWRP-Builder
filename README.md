@@ -20,14 +20,14 @@ By Aizawa Hikaru
 ## 参数说明
 
 | 名称 | 描述 | 示例 |
-| ------------ | ---------------- | ------------ |
-| `LIBRARY_NAME` | 使用的源码类型 | omni |
-| `LIBRARY_URL` | 使用的源码地址 | https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git |
-| `LIBRARY_BRANCH` | 使用的源码分支 | twrp-9.0 |
-| `DEVICE_URL` | 使用的设备树地址 | https://github.com/azwhikaru/twrp_device_xiaomi_archytas |
-| `DEVICE_BRANCH` | 使用的设备树分支 | twrp-9.0 |
-| `DEVICE_PATH` | 使用的设备树的位置 | device/xiaomi/Archytas |
-| `DEVICE_NAME` | 要编译的机型的名称 | Archytas |
+| ------------ | -------------------- | ------------ |
+| `LIBRARY_NAME` |   使用的源码类型   | omni |
+| `LIBRARY_URL` |   使用的源码地址   | https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git |
+| `LIBRARY_BRANCH` |   使用的源码分支   | twrp-9.0 |
+| `DEVICE_URL` |   使用的设备树地址   | https://github.com/azwhikaru/twrp_device_xiaomi_archytas |
+| `DEVICE_BRANCH` |   使用的设备树分支   | twrp-9.0 |
+| `DEVICE_PATH` |   使用的设备树的位置   | device/xiaomi/Archytas |
+| `DEVICE_NAME` |   要编译的机型的名称   | Archytas |
 
 -----
 
