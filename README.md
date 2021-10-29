@@ -1,4 +1,8 @@
 # 使用 Github Action 编译 Recovery
+```
+By Aizawa Hikaru
+```
+---
 
 ## 更新说明
 ```
@@ -8,7 +12,7 @@
 - 优化制作体验，重写参数传递方式，方便使用
 - 重写 README.md
 - 完全重构使用逻辑，降低使用难度
-- 支持 OrangeFox、SHRP 等的制作 (试验型功能)
+- 支持 [测试通过]OFRP、[未测试]SHRP 制作 (试验型功能)
 ```
 
 -----
@@ -41,7 +45,14 @@
 ![](https://i.bmp.ovh/imgs/2021/10/9cb7871267cf2f53.png)
 #### 5、填写完成后点击 'Run workflow' 开始运行
 
-------
+-----
 
 ## 编译结果
 可以在 [Release](../../releases) 下载
+
+-----
+## 备注
+
+#### TeamWin Recovery Project: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git
+#### OrangeFox Recovery Project: https://gitlab.com/OrangeFox/Manifest.git
+#### SKYHAWK Recovery Project: https://github.com/SHRP/platform_manifest_twrp_omni.git
