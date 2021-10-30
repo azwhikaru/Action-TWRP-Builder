@@ -103,8 +103,10 @@ jobs:
       run: |
         PATH=~/bin:$PATH
         cd workspace
-        zip ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
-        zip -m ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.img
+        zip ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/OrangeFox-Unofficial-${{ github.event.inputs.DEVICE_NAME }}.zip
+        zip -m ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/OrangeFox-Unofficial-${{ github.event.inputs.DEVICE_NAME }}.img
+        zip -m ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+        zip -m ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/SHRP_*.zip
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
