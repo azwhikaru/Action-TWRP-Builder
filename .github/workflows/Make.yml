@@ -96,19 +96,13 @@ jobs:
         lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
         make recoveryimage -j$(nproc --all)        
-    
-    - name: Compressed file
-      run: |
-        PATH=~/bin:$PATH
-        cd workspace
-        tree ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}
-        zip ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
-        zip -m ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
-        files: workspace/${{ github.event.inputs.DEVICE_NAME }}-Built.zip
+        files: |
+          workspace/${{ github.event.inputs.DEVICE_NAME }}/*.zip
+          workspace/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
