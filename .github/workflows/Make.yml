@@ -103,8 +103,8 @@ jobs:
       run: |
         PATH=~/bin:$PATH
         cd workspace
-        zip -r ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*
-
+        zip ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
+        zip -m ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.img
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
