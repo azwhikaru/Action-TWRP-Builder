@@ -109,7 +109,7 @@ jobs:
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
-        files: ${{ github.event.inputs.DEVICE_NAME }}-Built.zip
+        files: workspace/${{ github.event.inputs.DEVICE_NAME }}-Built.zip
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
