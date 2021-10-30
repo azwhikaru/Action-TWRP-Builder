@@ -79,7 +79,6 @@ jobs:
         PATH=~/bin:$PATH
         cd workspace
         repo sync -j$(nproc --all) -f --force-sync
-        ls -al
       
     - name: Clone device
       run: |
@@ -101,7 +100,8 @@ jobs:
       run: |
         PATH=~/bin:$PATH
         cd workspace
-        zip ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/*.zip
+        tree ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}
+        zip ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
         zip -m ./${{ github.event.inputs.DEVICE_NAME }}-Built.zip ./out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
 
     - name: Upload to Release
