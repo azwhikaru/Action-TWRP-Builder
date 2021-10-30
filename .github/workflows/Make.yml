@@ -22,7 +22,7 @@ on:
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
-        default: 'twrp-8.1'
+        default: 'android-8.1'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
