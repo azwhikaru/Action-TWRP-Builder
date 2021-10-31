@@ -30,11 +30,11 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/lge/flashlmdd-twrp'
+        default: 'device/lge/flashlmdd'
       DEVICE_COMMON_PATH:
         description: 'DEVICE_COMMON_PATH'
         required: true
-        default: 'device/lge/sm8150-common-twrp'
+        default: 'device/lge/sm8150-common'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
