@@ -6,31 +6,31 @@ on:
       LIBRARY_NAME:
         description: 'LIBRARY_NAME'
         required: true
-        default: 'OrangeFox Recovery'
+        default: 'omni'
       LIBRARY_URL:
         description: 'LIBRARY_URL'
         required: true
-        default: 'https://gitlab.com/OrangeFox/Manifest.git'
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
       LIBRARY_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
-        default: 'fox_8.1'
+        default: 'twrp-10.0'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
-        default: 'https://github.com/OpenWatchProject/twrp_device_mediatek_inharmony'
+        default: 'https://github.com/Xpsoted/android_device_alps_Z32P-TWRP'
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
-        default: 'android-8.1'
+        default: 'android-10'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/mediatek/inharmony'
+        default: 'device/alps/Z32P'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'inharmony'
+        default: 'Z32P'
 
 jobs:
   build:
