@@ -14,7 +14,7 @@ on:
       LIBRARY_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
-        default: 'twrp-10'
+        default: 'twrp-10.0'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
