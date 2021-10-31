@@ -10,7 +10,7 @@ on:
       LIBRARY_URL:
         description: 'LIBRARY_URL'
         required: true
-        default: 'https://gitlab.com/OrangeFox/build/make.git'
+        default: 'https://gitlab.com/OrangeFox/Manifest.git'
       LIBRARY_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
