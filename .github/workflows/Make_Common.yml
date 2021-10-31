@@ -1,4 +1,4 @@
-name: Make Recovery
+name: Make Recovery With Common Tree
 
 on:
   workflow_dispatch:
@@ -10,15 +10,19 @@ on:
       LIBRARY_URL:
         description: 'LIBRARY_URL'
         required: true
-        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
+        default: 'https://github.com/SHRP/platform_manifest_twrp_omni.git'
       LIBRARY_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
-        default: 'twrp-10.0'
+        default: 'v3_10.0'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
-        default: 'https://github.com/Xpsoted/android_device_qualcomm_qrd855-TWRP'
+        default: 'https://github.com/SGCMarkus/android_device_lge_flashlmdd-twrp'
+      DEVICE_COMMON_URL:
+        description: 'DEVICE_COMMON_URL'
+        required: true
+        default: 'https://github.com/SGCMarkus/android_device_lge_sm8150-common-twrp'
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
@@ -26,11 +30,15 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/qualcomm/msmnile'
+        default: 'device/lge/flashlmdd'
+      DEVICE_COMMON_PATH:
+        description: 'DEVICE_COMMON_PATH'
+        required: true
+        default: 'device/lge/sm8150-common'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'msmnile'
+        default: 'flashlmdd'
 
 jobs:
   build:
@@ -79,13 +87,14 @@ jobs:
       run: |
         PATH=~/bin:$PATH
         cd workspace
-        repo sync -j$(nproc --all)
+        repo sync -j$(nproc --all) -f --force-sync
       
     - name: Clone device
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
         git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        git clone ${{ github.event.inputs.DEVICE_COMMON_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_COMMON_PATH }}
 
     - name: Building
       run: |
@@ -103,6 +112,7 @@ jobs:
         files: |
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.cpio
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
