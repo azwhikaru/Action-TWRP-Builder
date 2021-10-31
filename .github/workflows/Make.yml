@@ -18,7 +18,7 @@ on:
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
-        default: 'https://github.com/OpenWatchProject/twrp_device_mediatek_inharmony'
+        default: 'https://github.com/OpenWatchProject/twrp_device_mediatek_harmony'
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
@@ -26,11 +26,11 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/mediatek/inharmony'
+        default: 'device/mediatek/harmony'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'inharmony'
+        default: 'harmony'
 
 jobs:
   build:
