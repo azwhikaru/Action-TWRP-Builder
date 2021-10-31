@@ -6,7 +6,7 @@ on:
       LIBRARY_NAME:
         description: 'LIBRARY_NAME'
         required: true
-        default: 'omni'
+        default: 'OrangeFox Recovery'
       LIBRARY_URL:
         description: 'LIBRARY_URL'
         required: true
