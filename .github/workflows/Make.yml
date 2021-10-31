@@ -1,4 +1,4 @@
-name: Make Recovery
+name: Make Recovery With Common Tree
 
 on:
   workflow_dispatch:
