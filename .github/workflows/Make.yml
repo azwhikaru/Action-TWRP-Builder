@@ -14,19 +14,27 @@ on:
       LIBRARY_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
-        default: 'twrp-8.1'
+        default: 'twrp-10'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
-        default: 'https://github.com/OpenWatchProject/twrp_device_mediatek_harmony'
+        default: 'https://github.com/SGCMarkus/android_device_lge_flashlmdd-twrp'
+      DEVICE_COMMON_URL:
+        description: 'DEVICE_COMMON_URL'
+        required: true
+        default: 'https://github.com/SGCMarkus/android_device_lge_sm8150-common-twrp'
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
-        default: 'android-8.1'
+        default: 'android-10'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/mediatek/harmony'
+        default: 'device/lge/flashlmdd-twrp'
+      DEVICE_COMMON_PATH:
+        description: 'DEVICE_COMMON_PATH'
+        required: true
+        default: 'device/lge/sm8150-common-twrp'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
@@ -86,6 +94,7 @@ jobs:
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
         git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        git clone ${{ github.event.inputs.DEVICE_COMMON_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_COMMON_PATH }}
 
     - name: Building
       run: |
