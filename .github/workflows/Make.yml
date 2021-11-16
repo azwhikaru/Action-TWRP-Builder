@@ -31,6 +31,10 @@ on:
         description: 'DEVICE_NAME'
         required: true
         default: 'msmnile'
+      DEVICE_TYPE:
+        description: 'DEVICE_TYPE'
+        required: true
+        default: 'eng'
 
 jobs:
   build:
@@ -93,7 +97,7 @@ jobs:
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
+        lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-${{ github.event.inputs.DEVICE_TYPE }}
         make clean
         make recoveryimage -j$(nproc --all)
 
