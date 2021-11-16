@@ -6,6 +6,10 @@
 
 ## 更新说明
 ```
+= 2021/11/17
+- 增加编译模式支持 (在 vendorsetup: userdebug/eng/debug)
+```
+```
 = 2021/10/31
 - 增加 Common 设备支持 [@Xpsoted](https://github.com/Xpsoted)
 ```
@@ -39,6 +43,7 @@
 | `DEVICE_BRANCH` | 设备分支 | twrp-9.0 |
 | `DEVICE_PATH` | 设备位置 | device/xiaomi/Archytas |
 | `DEVICE_NAME` | 机型名称 | Archytas |
+| `DEVICE_TYPE` | 编译模式 | eng/userdebug/debug |
 
 -----
 
