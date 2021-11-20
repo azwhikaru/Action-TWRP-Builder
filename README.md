@@ -6,6 +6,10 @@
 
 ## 更新说明
 ```
+= 2021/11/20
+- 增加默认上传 boot.img
+```
+```
 = 2021/11/17
 - 增加编译模式支持 (在 vendorsetup: userdebug/eng/debug)
 ```
