@@ -5,8 +5,8 @@ on:
     inputs:
       LIBRARY_NAME:
         description: 'LIBRARY_NAME'
-        required: true
-        default: 'omni'
+        required: false
+        default: 'omni_'
       LIBRARY_URL:
         description: 'LIBRARY_URL'
         required: true
@@ -97,7 +97,7 @@ jobs:
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-${{ github.event.inputs.DEVICE_TYPE }}
+        lunch ${{ github.event.inputs.LIBRARY_NAME }}${{ github.event.inputs.DEVICE_NAME }}-${{ github.event.inputs.DEVICE_TYPE }}
         make clean
         make recoveryimage -j$(nproc --all)
 
