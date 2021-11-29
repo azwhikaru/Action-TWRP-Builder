@@ -11,6 +11,10 @@ on:
         description: 'LIBRARY_BRANCH'
         required: true
         default: 'twrp-10.0-deprecated'
+      LIBRARY_TYPE:
+        description: 'LIBRARY_TYPE'
+        required: false
+        default: 'omni_'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
@@ -26,7 +30,7 @@ on:
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'omni_msmnile'
+        default: 'msmnile'
 
 jobs:
   build:
@@ -89,7 +93,7 @@ jobs:
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.DEVICE_NAME }}-eng
+        lunch ${{ github.event.inputs.LIBRARY_TYPE }}${{ github.event.inputs.DEVICE_NAME }}-eng
         make clean
         make recoveryimage -j$(nproc --all)
 
