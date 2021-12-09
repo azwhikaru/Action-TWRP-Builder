@@ -1,36 +1,36 @@
-name: Make Recovery
+name: Android-Recovery-Builder
 
 on:
   workflow_dispatch:
     inputs:
-      LIBRARY_URL:
-        description: 'LIBRARY_URL'
+      MANIFEST_TYPE:
+        description: 'MANIFEST_TYPE'
         required: true
-        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
-      LIBRARY_BRANCH:
+        default: 'omni'
+      MANIFEST_URL:
+        description: 'MANIFEST_URL'
+        required: true
+        default: 'git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
+      MANIFEST_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
-        default: 'twrp-10.0-deprecated'
-      LIBRARY_TYPE:
-        description: 'LIBRARY_TYPE'
-        required: false
-        default: 'omni_'
-      DEVICE_URL:
-        description: 'DEVICE_URL'
+        default: 'twrp-9.0'
+      DEVICE_TREE_URL:
+        description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/Xpsoted/android_device_qualcomm_qrd855-TWRP'
-      DEVICE_BRANCH:
-        description: 'DEVICE_BRANCH'
+        default: 'https://github.com/azwhikaru/twrp_device_xiaomi_archytas'
+      DEVICE_TREE_BRANCH:
+        description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'android-10'
+        default: 'twrp-9.0'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/qualcomm/msmnile'
+        default: 'device/xiaomi/Archytas'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'msmnile'
+        default: 'Archytas'
 
 jobs:
   build:
@@ -50,6 +50,7 @@ jobs:
         sudo apt -y autoclean
         sudo apt clean
         sudo apt update
+        sudo apt -y upgrade
         sudo apt -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip jq bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev imagemagick libbz2-dev libssl-dev lzma ncftp bash-completion python openjdk-8-jdk qemu-user-static
       
     - name: Set variables
@@ -72,38 +73,36 @@ jobs:
         echo "::set-output name=pwd::$(pwd)"
         git config --global user.name "Hikaru's Action-Build-Bot"
         git config --global user.email "Android@teio.tk"
-        repo init --depth=1 -u ${{ github.event.inputs.LIBRARY_URL }} -b ${{ github.event.inputs.LIBRARY_BRANCH }}
+        repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
       id: pwd
           
     - name: Repo Sync
       run: |
         PATH=~/bin:$PATH
         cd workspace
-        repo sync -j$(nproc --all)
+        repo sync -j$(nproc --all) -f --force-sync
+        ls -al
       
-    - name: Clone device
+    - name: Clone device tree
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
-        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
 
-    - name: Building
+    - name: Building recovery
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.LIBRARY_TYPE }}${{ github.event.inputs.DEVICE_NAME }}-eng
+        lunch ${{ github.event.inputs.MANIFEST_TYPE }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
-        make recoveryimage -j$(nproc --all)
-
+        make recoveryimage -j$(nproc --all)        
+      
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
-        files: |
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/boot.img
+        files: workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
