@@ -18,19 +18,19 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/azwhikaru/twrp_device_xiaomi_archytas'
+        default: 'https://github.com/b-ghs/android_device_rockchip_rk3318'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'twrp-9.0'
+        default: 'master'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/xiaomi/Archytas'
+        default: 'device/rockchip/rk3318'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'Archytas'
+        default: 'rk3318'
 
 jobs:
   build:
@@ -88,6 +88,9 @@ jobs:
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        # MEEEEE
+        rm -rf bootable/recovery && git clone https://github.com/omnirom/android_bootable_recovery -b android-9.0 --depth 1 bootable/recovery
+        git clone https://github.com/TwrpBuilder/android_device_generic_twrpbuilder.git device/generic/twrpbuilder
 
     - name: Building recovery
       run: |
