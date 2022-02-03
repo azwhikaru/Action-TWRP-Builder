@@ -1,4 +1,4 @@
-name: Android-Recovery-Builder
+name: Normal
 
 on:
   workflow_dispatch:
