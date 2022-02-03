@@ -6,13 +6,16 @@ Support OFRP, SHRP, TWRP compilation and production
 
 ## Release Notes
 ```
+= 2022/02/03
+- Due to the hardware resource limitation of GitHub action, this version cannot be compiled based on AOSP and other source codes of Android 11 and above. If necessary, please use local compilation
+
 = 2021/10/29: 
--Refactored version 2.0
--Completely reconstruct the use logic to reduce the difficulty of use
--Optimize the parameter transfer part, now you can run multiple Workers at the same time
--TWRP compilation test passed
--OFRP compilation test passed
--SHRP compile test passed
+- Refactored version 2.0
+- Completely reconstruct the use logic to reduce the difficulty of use
+- Optimize the parameter transfer part, now you can run multiple Workers at the same time
+- TWRP compilation test passed
+- OFRP compilation test passed
+- SHRP compile test passed
 ```
 
 -----
