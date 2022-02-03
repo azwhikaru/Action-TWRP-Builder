@@ -1,4 +1,4 @@
-name: Android-Recovery-Builder
+name: Common
 
 on:
   workflow_dispatch:
