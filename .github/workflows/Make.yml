@@ -5,7 +5,7 @@ on:
     inputs:
       MANIFEST_TYPE:
         description: 'MANIFEST_TYPE'
-        required: true
+        required: false
         default: 'omni_'
       MANIFEST_URL:
         description: 'MANIFEST_URL'
