@@ -27,6 +27,10 @@ on:
         description: 'DEVICE_NAME'
         required: true
         default: 'Archytas'
+      MAKEFILE_NAME:
+        description: 'MAKEFILE_NAME'
+        required: true
+        default: 'omni_Archytas'
 
 jobs:
   build:
@@ -91,7 +95,7 @@ jobs:
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.DEVICE_NAME }}-eng 
+        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng 
         make clean
         make recoveryimage -j$(nproc --all)        
       
