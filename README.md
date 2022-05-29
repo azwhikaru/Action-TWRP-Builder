@@ -6,6 +6,9 @@ Support OFRP, SHRP, TWRP compilation and production
 
 ## Release Notes
 ```
+= 2022/05/29
+- Should work correctly with Android 11 based source code
+
 = 2022/02/03
 - Due to the hardware resource limitation of GitHub action, this version cannot be compiled based on AOSP and other source codes of Android 11 and above. If necessary, please use local compilation
 
