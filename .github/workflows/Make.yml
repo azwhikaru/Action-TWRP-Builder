@@ -6,9 +6,9 @@ on:
       MANIFEST_URL:
         description: 'MANIFEST_URL'
         required: true
-        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni'
       MANIFEST_BRANCH:
-        description: 'LIBRARY_BRANCH'
+        description: 'MANIFEST_BRANCH'
         required: true
         default: 'twrp-9.0'
       DEVICE_TREE_URL:
