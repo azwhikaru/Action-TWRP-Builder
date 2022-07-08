@@ -51,14 +51,14 @@ Support OFRP, SHRP, TWRP compilation and production
 
 -----
 
-## how to use
+## How to use
 ```
-For example, your username is: Fun-114514
+For example, your username is: JohnSmith
 ```
 #### 1. Click'Fork' in the upper right corner of this warehouse
-![](https://i.bmp.ovh/imgs/2021/10/6b6ed9f29e732372.png)
+![image](https://user-images.githubusercontent.com/37921907/177914706-c92476c5-7e14-4fb3-be94-0c8a11dae874.png)
 #### 2. After waiting for the automatic redirection, you will see your own username
-![](https://i.bmp.ovh/imgs/2021/10/66cfe324c0ebb69b.png)
+![image](https://user-images.githubusercontent.com/37921907/177915106-5bde6fc9-303c-479e-b290-22b48efd1e4e.png)
 #### 3. Change the [username and email](https://github.com/CaptainThrowback/Action-Recovery-Builder/blob/main/.github/workflows/Recovery%20Build.yml#L100-L101) in the workflow to reflect your Github credentials
 ## Setting up SSH Keys (optional)
 #### 4. Go to Settings, then select Deploy keys and select "Add deploy key" button.
@@ -95,9 +95,9 @@ cat ssh_host_ed25519_key
 
 ## Building the Recovery
 #### 9. Click'Actions-Recovery Build'
-![](https://i.bmp.ovh/imgs/2021/10/23896d1b66292047.png)
+![image](https://user-images.githubusercontent.com/37921907/177915304-8731ed80-1d49-48c9-9848-70d0ac8f2720.png)
 #### 10. Click'Run workflow' and fill in according to the above'parameter description'
-![](https://i.bmp.ovh/imgs/2021/10/9cb7871267cf2f53.png)
+![image](https://user-images.githubusercontent.com/37921907/177915346-71c29149-78fb-4a00-996f-5d84ffc9eb8c.png)
 #### 11. After filling in, click'Run workflow' to start running
 
 -----
@@ -109,5 +109,5 @@ Can be downloaded at [Release](../../releases)
 ## Remark
 
 #### TeamWin Recovery Project: https://github.com/minimal-manifest-twrp
-#### OrangeFox Recovery Project: https://gitlab.com/OrangeFox/Manifest.git
-#### SKYHAWK Recovery Project: https://github.com/SHRP/platform_manifest_twrp_omni.git
+#### OrangeFox Recovery Project: https://gitlab.com/OrangeFox/Manifest
+#### SKYHAWK Recovery Project: https://github.com/SHRP/platform_manifest_twrp_omni
