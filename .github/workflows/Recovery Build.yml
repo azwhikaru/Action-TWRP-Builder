@@ -6,19 +6,19 @@ on:
       MANIFEST_URL:
         description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
         required: true
-        default: ' https://gitlab.com/OrangeFox/sync.git'
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
-        default: 'fox_11.0'
+        default: 'twrp-11'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/Fr0ztyy43/twrp_redmi_begonia'
+        default: 'https://github.com/Fr0ztyy43/shrp-begonia'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'shrp'
+        default: 'main'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
