@@ -60,7 +60,7 @@ Support OFRP, SHRP, TWRP compilation and production
 ```
 For example, your username is: JohnSmith
 ```
-#### 1. Click 'Fork' in the upper right corner of this warehouse
+#### 1. Click 'Fork' in the upper right corner of this repository
 ![image](https://user-images.githubusercontent.com/37921907/177914706-c92476c5-7e14-4fb3-be94-0c8a11dae874.png)
 #### 2. After waiting for the automatic redirection, you will see your own username
 ![image](https://user-images.githubusercontent.com/37921907/177915106-5bde6fc9-303c-479e-b290-22b48efd1e4e.png)
