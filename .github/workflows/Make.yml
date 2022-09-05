@@ -18,7 +18,7 @@ on:
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
-        default: 'https://github.com/lopestom/device_Armor_8_Pro.git'
+        default: 'https://github.com/depesh1977/device-twrp-twrp-11.git'
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
@@ -26,11 +26,11 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/ulefone/Armor_8_Pro'
+        default: ' device/oneplus/billie'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'Armor_8_Pro'
+        default: 'billie'
 
 jobs:
   build:
@@ -70,8 +70,8 @@ jobs:
         mkdir workspace
         cd workspace
         echo "::set-output name=pwd::$(pwd)"
-        git config --global user.name "lopestom"
-        git config --global user.email "lopestom@gmail.com"
+        git config --global user.name "depesh1977"
+        git config --global user.email "axenov.gosha@yandex.ru"
         repo init --depth=1 -u ${{ github.event.inputs.LIBRARY_URL }} -b ${{ github.event.inputs.LIBRARY_BRANCH }}
       id: pwd
           
@@ -95,17 +95,17 @@ jobs:
         source build/envsetup.sh
         lunch ${{ github.event.inputs.LIBRARY_TYPE }}${{ github.event.inputs.DEVICE_NAME }}-eng
         make clean
-        make bootimage -j$(nproc --all)
+        make recoveryimage -j$(nproc --all)
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
         files: |
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/boot.img
-#          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+ #         workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/boot.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
       env:
-        GITHUB_TOKEN: ${{ secrets.UNIVERSAL }}
+        GITHUB_TOKEN: ${{ secrets.test }}
