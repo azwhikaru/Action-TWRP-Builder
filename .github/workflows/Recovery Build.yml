@@ -3,11 +3,11 @@ name: Recovery Build
 on:
   workflow_dispatch:
     inputs:
-      MANIFEST_URL:
+      MANIFEST_URL: https://gitlab.com/OrangeFox/sync.git
         description: 'MANIFEST_URL (if using SSH keys, use git@github.com:repo URL format)'
         required: true
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
-      MANIFEST_BRANCH:
+      MANIFEST_BRANCH: fox_11.0
         description: 'MANIFEST_BRANCH'
         required: true
         default: 'twrp-12.1'
