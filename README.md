@@ -1,7 +1,7 @@
 # Use Github Action to compile Recovery
-```
-Support OFRP, SHRP, TWRP compilation and production
-```
+
+- Support ~~OFRP~~, SHRP, TWRP compilation and production
+
 ---
 
 ## Thanks to
@@ -11,6 +11,9 @@ Support OFRP, SHRP, TWRP compilation and production
 
 ## Release Notes
 ```
+= 2022/10/28
+- OFRP manifest is changed, so not fully support OFRP now (if you can slove this, please submit a pull request!)
+
 = 2022/07/08
 - TWRP and TWRP-based 5.X ~ 12.X are ***ALL COMPILED SUCCESSFULLY***
 
