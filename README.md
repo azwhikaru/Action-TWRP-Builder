@@ -1,7 +1,7 @@
 # Use Github Action to compile Recovery
-```
-Support OFRP, SHRP, TWRP compilation and production
-```
+
+- Support ~~OFRP~~, SHRP, TWRP compilation and production
+
 ---
 
 ## Thanks to
@@ -11,6 +11,9 @@ Support OFRP, SHRP, TWRP compilation and production
 
 ## Release Notes
 ```
+= 2022/10/28
+- OFRP manifest is changed, so not fully support OFRP now (if you can slove this, please submit a pull request!)
+
 = 2022/07/08
 - TWRP and TWRP-based 5.X ~ 12.X are ***ALL COMPILED SUCCESSFULLY***
 
@@ -60,7 +63,7 @@ Support OFRP, SHRP, TWRP compilation and production
 ```
 For example, your username is: JohnSmith
 ```
-#### 1. Click 'Fork' in the upper right corner of this warehouse
+#### 1. Click 'Fork' in the upper right corner of this repository
 ![image](https://user-images.githubusercontent.com/37921907/177914706-c92476c5-7e14-4fb3-be94-0c8a11dae874.png)
 #### 2. After waiting for the automatic redirection, you will see your own username
 ![image](https://user-images.githubusercontent.com/37921907/177915106-5bde6fc9-303c-479e-b290-22b48efd1e4e.png)
