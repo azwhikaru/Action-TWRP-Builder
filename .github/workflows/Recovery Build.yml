@@ -6,11 +6,11 @@ on:
       MANIFEST_URL:
         description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
         required: true
-        default: 'https://github.com/TeamWin/android_bootable_recovery'
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
-        default: 'android-12.1'
+        default: 'twrp-12.1'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
