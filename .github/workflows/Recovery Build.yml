@@ -6,23 +6,23 @@ on:
       MANIFEST_URL:
         description: 'MANIFEST_URL (if using SSH keys, use git@github.com:repo URL format)'
         required: true
-        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
+        default: 'https://github.com/SHRP/manifest'
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
-        default: 'twrp-12.1'
+        default: 'v3_9.0'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/TeamWin/android_device_asus_I003D'
+        default: 'https://github.com/derveror/device_samsung_zerolte'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'android-12.1'
+        default: 'fox_9.0'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/asus/I003D'
+        default: 'device/samsung/zerolte'
       COMMON_TREE_URL:
         description: 'COMMON_TREE_URL (if no common tree, leave blank)'
         required: false
@@ -32,11 +32,11 @@ on:
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'I003D'
+        default: 'android_device_samsung_zerolte'
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
         required: true
-        default: 'twrp_I003D'
+        default: 'omni_zerolte'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
@@ -100,8 +100,8 @@ jobs:
         mkdir workspace
         cd workspace
         echo "workspace-folder=$(pwd)" >> $GITHUB_OUTPUT
-        git config --global user.name "Captain Throwback"
-        git config --global user.email "captainthrowback@hotmail.com"
+        git config --global user.name "derveror"
+        git config --global user.email "derveror@gmail.com"
         repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
       id: pwd
           
@@ -161,4 +161,4 @@ jobs:
           Device: ${{ github.event.inputs.DEVICE_NAME }}
           Target: ${{ github.event.inputs.BUILD_TARGET }}.img
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.derveror }}
