@@ -36,7 +36,7 @@ on:
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
         required: true
-        default: 'SHRP-KC8'
+        default: 'omni_TECNO-KC8'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
