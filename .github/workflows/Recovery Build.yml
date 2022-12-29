@@ -10,7 +10,7 @@ on:
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
-        default: 'main'
+        default: 'v3_11.0'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
