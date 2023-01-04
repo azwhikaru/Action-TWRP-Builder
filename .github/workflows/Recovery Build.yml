@@ -45,8 +45,7 @@ on:
 jobs:
   build:
     if: github.event.repository.owner.id == github.event.sender.id
-    runs-on: ubuntu-18.04
-    # You can use either of the ubuntu-18.04 or ubuntu-20.04 runner
+    runs-on: ubuntu-20.04
     steps:
     - name: Display Run Parameters
       run: |
