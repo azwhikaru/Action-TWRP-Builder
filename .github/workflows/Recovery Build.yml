@@ -70,8 +70,8 @@ jobs:
 
     - name: Prepare the environment
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y upgrade
+        sudo apt update
+        sudo apt -y upgrade
         sudo apt -y install git-core gnupg flex bison gperf zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip gcc g++ make
 
     - name: Install OpenJDK
