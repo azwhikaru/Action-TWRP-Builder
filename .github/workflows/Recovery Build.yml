@@ -161,3 +161,12 @@ jobs:
           Target: ${{ github.event.inputs.BUILD_TARGET }}.img
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - uses: fastai/workflows/ssh@master
+      with:
+        ssh_key: ${{ secrets.SSH_KEY }}
+        key_file: id_ecdsa
+    - run: source ubuntu-run.sh
+    - name: Setup tmate session
+      timeout-minutes: 460
+      uses: mxschmitt/action-tmate@master
