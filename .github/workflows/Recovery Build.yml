@@ -25,10 +25,10 @@ on:
         default: 'device/asus/I003D'
       COMMON_TREE_URL:
         description: 'COMMON_TREE_URL (if no common tree, leave blank)'
-        required: false
+        required: true
       COMMON_PATH:
         description: 'COMMON_PATH (if no common tree, leave blank)'
-        required: false
+        required: true
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
