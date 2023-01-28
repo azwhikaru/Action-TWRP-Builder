@@ -30,7 +30,7 @@ on:
       COMMON_PATH:
         description: 'COMMON_PATH (if no common tree, leave blank)'
         required: false
-         default: 'vendor/qcom/opensource/commonsys'
+        default: 'vendor/qcom/opensource/commonsys'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
