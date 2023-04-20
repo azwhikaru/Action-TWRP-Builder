@@ -4,7 +4,7 @@
 
 ---
 
-## OrangeFox is [here](https://github.com/azwhikaru/Action-OFRP-Builde)
+## OrangeFox is [here](https://github.com/azwhikaru/Action-OFRP-Builder)
 
 ---
 
