@@ -8,6 +8,10 @@
 
 ---
 
+## I can't help you with Device Tree problems! Issues that do not indicate script errors will be closed!
+
+---
+
 ## Thanks to
 - All contributors
 
