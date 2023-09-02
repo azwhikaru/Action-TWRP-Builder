@@ -166,3 +166,4 @@ jobs:
           Target: ${{ github.event.inputs.BUILD_TARGET }}.img
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        chmod +x  device/samsung/f22/mkbootimg
