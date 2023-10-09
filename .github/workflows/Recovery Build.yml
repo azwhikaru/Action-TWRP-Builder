@@ -74,7 +74,9 @@ jobs:
       run: |
         sudo apt install git aria2 -y
         sudo apt install python-is-python3 -y
-        git clone https://gitlab.com/OrangeFox/misc/scripts
+        mkdir offx
+        cd offx
+        git clone https://gitlab.com/OrangeFox/misc/scripts 
         cd scripts
         sudo bash setup/android_build_env.sh
         sed -i 's/cd -/cd ../g' setup/install_android_sdk.sh
