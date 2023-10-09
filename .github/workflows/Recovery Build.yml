@@ -73,8 +73,8 @@ jobs:
     - name: Prepare the environment
       run: |
         sudo apt install git aria2 -y
-        mkdir offx
-        cd offx
+        mkdir ofx_scripts
+        cd ofx_scripts
         git clone https://gitlab.com/OrangeFox/misc/scripts 
         cd scripts
         sudo bash setup/android_build_env.sh
