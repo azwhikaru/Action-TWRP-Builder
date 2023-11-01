@@ -6,6 +6,10 @@ Support OFRP, SHRP, TWRP compilation and production
 
 ## Release Notes
 ```
+= 2023/10/31
+- Fix build with Omni manifests
+- 5.1 branch no longer supported
+
 = 2023/07/21
 - Update to ubuntu-20.04
 - May not work on older twrp branches
