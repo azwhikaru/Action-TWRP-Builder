@@ -4,11 +4,15 @@
 
 ---
 
+## Python 2 in Debian (Ubuntu) has been removed. If you are working on Android 8.1 and below, use *Recovery Build (Legacy)*
+
+---
+
 ## OrangeFox is [here](https://github.com/azwhikaru/Action-OFRP-Builder)
 
 ---
 
-## I can't help you with Device Tree problems! Issues that do not indicate script errors will be closed!
+## Report script issues only, questions about your device may not be responded
 
 ---
 
