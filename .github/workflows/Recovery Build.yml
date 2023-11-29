@@ -33,10 +33,10 @@ on:
         description: 'DEVICE_NAME'
         required: true
         default: 'I003D'
-      MAKEFILE_NAME:
-        description: 'MAKEFILE_NAME'
-        required: true
-        default: 'twrp_I003D'
+      REPOPICK_PATCHES:
+        description: 'REPOPICK_PATCHES (Gerrit commit numbers separated by a space to be included in the build)'
+        type: string
+        required: false
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
@@ -57,7 +57,6 @@ jobs:
         echo "Device Tree Branch: ${{ github.event.inputs.DEVICE_TREE_BRANCH }}"
         echo "Device Path: ${{ github.event.inputs.DEVICE_PATH }}"
         echo "Device Name: ${{ github.event.inputs.DEVICE_NAME }}"
-        echo "Makefile Name: ${{ github.event.inputs.MAKEFILE_NAME }}"
         echo "Build Target: ${{ github.event.inputs.BUILD_TARGET }}.img"
         echo "::endgroup::"
  
@@ -145,6 +144,13 @@ jobs:
       with:
         swap-size-gb: 12
 
+    - name: Repopick Gerrit patches
+      if: github.event.inputs.REPOPICK_PATCHES != null
+      run: |
+        source build/envsetup.sh
+        repopick ${{ github.event.inputs.REPOPICK_PATCHES }}
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
     - name: Install Python 2
       if: ${{ steps.buildtree.outputs.value == 'omni' }}
       run: |
@@ -156,7 +162,7 @@ jobs:
       run: |
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+        lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Upload to Release
