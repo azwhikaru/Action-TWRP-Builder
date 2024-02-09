@@ -150,6 +150,7 @@ jobs:
         source build/envsetup.sh
         repopick ${{ github.event.inputs.REPOPICK_PATCHES }}
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      continue-on-error: true
 
     - name: Install Python 2
       if: ${{ steps.buildtree.outputs.value == 'omni' }}
