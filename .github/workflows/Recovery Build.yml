@@ -111,52 +111,6 @@ jobs:
         repo sync -j$(nproc --all) --force-sync
       working-directory: workspace
 
-    - name: Clone common tree (TeamWin)
-      if: ${{ contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' ) && github.event.inputs.COMMON_TREE_URL != null && github.event.inputs.COMMON_PATH != null }}
-      run: |
-        mkdir -p .repo/local_manifests
-        sed -e "s%{COMMON_TREE_URL_REPO}%$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/common_manifest.xml > .repo/local_manifests/common_manifest.xml
-        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/common_manifest.xml
-        sed -i "s%{REMOTE_NAME}%TeamWin%g" .repo/local_manifests/common_manifest.xml
-        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/common_manifest.xml
-        repo sync -j$(nproc --all)
-        rm -f .repo/local_manifests/common_manifest.xml
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-
-    - name: Clone common tree (Github)
-      if: ${{ !contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' ) && github.event.inputs.COMMON_TREE_URL != null && github.event.inputs.COMMON_PATH != null }}
-      run: |
-        mkdir -p .repo/local_manifests
-        sed -e "s%{COMMON_TREE_URL_REPO}%$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/common_manifest.xml > .repo/local_manifests/common_manifest.xml
-        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/common_manifest.xml
-        sed -i "s%{REMOTE_NAME}%github%g" .repo/local_manifests/common_manifest.xml
-        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/common_manifest.xml
-        repo sync -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-
-    - name: Clone device tree (TeamWin)
-      if: ${{ contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
-      run: |
-        mkdir -p .repo/local_manifests
-        sed -e "s%{DEVICE_TREE_URL_REPO}%$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/device_manifest.xml > .repo/local_manifests/device_manifest.xml
-        sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/device_manifest.xml
-        sed -i "s%{REMOTE_NAME}%TeamWin%g" .repo/local_manifests/device_manifest.xml
-        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/device_manifest.xml
-        repo sync -j$(nproc --all)
-        rm -f .repo/local_manifests/device_manifest.xml
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-
-    - name: Clone device tree (Github)
-      if: ${{ !contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
-      run: |
-        mkdir -p .repo/local_manifests
-        sed -e "s%{DEVICE_TREE_URL_REPO}%$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/device_manifest.xml > .repo/local_manifests/device_manifest.xml
-        sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/device_manifest.xml
-        sed -i "s%{REMOTE_NAME}%github%g" .repo/local_manifests/device_manifest.xml
-        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/device_manifest.xml
-        repo sync -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-
     - name: Check Build Tree
       uses: haya14busa/action-cond@v1
       id: buildtree
@@ -165,10 +119,74 @@ jobs:
         if_true: twrp
         if_false: omni
 
-    - name: Sync Device Dependencies
+    - name: Create roomservice.xml
+      run: |
+        mkdir -p .repo/local_manifests
+        cp -f ${GITHUB_WORKSPACE}/templates/roomservice.xml .repo/local_manifests/
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Clone common tree (TeamWin)
+      if: |
+        contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' )
+        && github.event.inputs.COMMON_TREE_URL != null
+        && github.event.inputs.COMMON_PATH != null
+      run: |
+        sed -i "s%\!--project name=\"{COMMON_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{COMMON_REMOTE_NAME}%TeamWin%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{COMMON_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
+        repo sync -j$(nproc --all)
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Clone common tree (Github)
+      if: |
+        !contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' )
+        && github.event.inputs.COMMON_TREE_URL != null
+        && github.event.inputs.COMMON_PATH != null
+      run: |
+        sed -i "s%\!--project name=\"{COMMON_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{COMMON_REMOTE_NAME}%github%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{COMMON_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
+        repo sync -j$(nproc --all)
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Clone device tree (TeamWin)
+      if: ${{ contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
+      run: |
+        sed -i "s%\!--project name=\"{DEVICE_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{DEVICE_REMOTE_NAME}%TeamWin%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{DEVICE_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
+        repo sync -j$(nproc --all)
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Clone device tree (Github)
+      if: ${{ !contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
+      run: |
+        sed -i "s%\!--project name=\"{DEVICE_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{DEVICE_REMOTE_NAME}%github%g" .repo/local_manifests/roomservice.xml
+        sed -i "s%{DEVICE_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
+        repo sync -j$(nproc --all)
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Sync Device Dependencies (AOSP)
+      if: ${{ steps.buildtree.outputs.value == 'twrp' }}
       run: |
         source build/envsetup.sh
         lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      id: syncdevicedeps
+      continue-on-error: true
+
+    - name: Sync Device Dependencies (Omni/subdevices)
+      if: |
+        steps.buildtree.outputs.value == 'omni'
+        || steps.syncdevicedeps.outcome == 'failure'
+      run: |
+        bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
+        repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
       continue-on-error: true
 
