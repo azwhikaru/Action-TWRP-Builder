@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <project name="{COMMON_TREE_URL_REPO}" path="{COMMON_PATH}" remote="{REMOTE_NAME}" revision="{DEVICE_TREE_BRANCH}" />
+</manifest>

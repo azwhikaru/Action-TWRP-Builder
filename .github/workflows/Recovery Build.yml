@@ -110,18 +110,51 @@ jobs:
       run: |
         repo sync -j$(nproc --all) --force-sync
       working-directory: workspace
-      
-    - name: Clone device tree
+
+    - name: Clone common tree (TeamWin)
+      if: ${{ contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' ) && github.event.inputs.COMMON_TREE_URL != null && github.event.inputs.COMMON_PATH != null }}
       run: |
-        git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        mkdir -p .repo/local_manifests
+        sed -e "s%{COMMON_TREE_URL_REPO}%$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/common_manifest.xml > .repo/local_manifests/common_manifest.xml
+        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/common_manifest.xml
+        sed -i "s%{REMOTE_NAME}%TeamWin%g" .repo/local_manifests/common_manifest.xml
+        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/common_manifest.xml
+        repo sync -j$(nproc --all)
+        rm -f .repo/local_manifests/common_manifest.xml
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
-    - name: Clone common tree
-      if: |
-        github.event.inputs.COMMON_TREE_URL != null
-        && github.event.inputs.COMMON_PATH != null
+    - name: Clone common tree (Github)
+      if: ${{ !contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' ) && github.event.inputs.COMMON_TREE_URL != null && github.event.inputs.COMMON_PATH != null }}
       run: |
-        git clone ${{ github.event.inputs.COMMON_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.COMMON_PATH }}
+        mkdir -p .repo/local_manifests
+        sed -e "s%{COMMON_TREE_URL_REPO}%$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/common_manifest.xml > .repo/local_manifests/common_manifest.xml
+        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/common_manifest.xml
+        sed -i "s%{REMOTE_NAME}%github%g" .repo/local_manifests/common_manifest.xml
+        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/common_manifest.xml
+        repo sync -j$(nproc --all)
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Clone device tree (TeamWin)
+      if: ${{ contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
+      run: |
+        mkdir -p .repo/local_manifests
+        sed -e "s%{DEVICE_TREE_URL_REPO}%$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/device_manifest.xml > .repo/local_manifests/device_manifest.xml
+        sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/device_manifest.xml
+        sed -i "s%{REMOTE_NAME}%TeamWin%g" .repo/local_manifests/device_manifest.xml
+        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/device_manifest.xml
+        repo sync -j$(nproc --all)
+        rm -f .repo/local_manifests/device_manifest.xml
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Clone device tree (Github)
+      if: ${{ !contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
+      run: |
+        mkdir -p .repo/local_manifests
+        sed -e "s%{DEVICE_TREE_URL_REPO}%$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" ${GITHUB_WORKSPACE}/templates/device_manifest.xml > .repo/local_manifests/device_manifest.xml
+        sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/device_manifest.xml
+        sed -i "s%{REMOTE_NAME}%github%g" .repo/local_manifests/device_manifest.xml
+        sed -i "s%{DEVICE_TREE_BRANCH}%${{ github.event.inputs.DEVICE_TREE_BRANCH }}%g" .repo/local_manifests/device_manifest.xml
+        repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Check Build Tree
@@ -136,7 +169,6 @@ jobs:
       run: |
         source build/envsetup.sh
         lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng
-        repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
       continue-on-error: true
 
