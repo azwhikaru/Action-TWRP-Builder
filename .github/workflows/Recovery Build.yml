@@ -175,7 +175,7 @@ jobs:
     - name: Set Swap Space
       uses: pierotofy/set-swap-space@master
       with:
-        swap-size-gb: 12
+        swap-size-gb: 24
 
     - name: Repopick Gerrit patches
       if: github.event.inputs.REPOPICK_PATCHES != null
