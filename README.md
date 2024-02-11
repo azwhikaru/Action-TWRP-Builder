@@ -1,11 +1,20 @@
 # Use Github Action to compile Recovery
 ```
-Support OFRP, SHRP, TWRP compilation and production
+Support PBRP, SHRP, TWRP compilation and production
 ```
 ---
 
 ## Release Notes
 ```
+= 2024/02/11
+- Fix support for dependencies in AOSP trees
+- Increase swap size for kernel inline builds
+- Remove common tree input fields (not needed)
+- OrangeFox not presently supported due to script-based sync methods
+
+= 2023/11/28
+- Add support to repopick patches from Gerrit
+
 = 2023/10/31
 - Fix build with Omni manifests
 - 5.1 branch no longer supported
@@ -51,10 +60,8 @@ Support OFRP, SHRP, TWRP compilation and production
 | `DEVICE_TREE_URL` | Device address | https://github.com/TeamWin/android_device_asus_I003D |
 | `DEVICE_TREE_BRANCH` | Device branch | android-12.1 |
 | `DEVICE_PATH` | Device location | device/asus/I003D |
-| `COMMON_TREE_URL` | Common tree address | https://github.com/TeamWin/android_device_asus_sm8250-common |
-| `COMMON_PATH` | Common tree location | device/asus/sm8250-common |
 | `DEVICE_NAME` | Model name | I003D |
-| `MAKEFILE_NAME` | Makefile name | twrp_I003D |
+| `REPOPICK_PATCHES` | Gerrit patches to include in build (space separated) | 1245 1437 |
 | `BUILD_TARGET` | Build Target Partition (boot/recovery/vendorboot) | recovery |
 
 -----
@@ -117,5 +124,5 @@ Can be downloaded at [Release](../../releases)
 ## Remark
 
 #### TeamWin Recovery Project: https://github.com/minimal-manifest-twrp
-#### OrangeFox Recovery Project: https://gitlab.com/OrangeFox/Manifest.git
-#### SKYHAWK Recovery Project: https://github.com/SHRP/platform_manifest_twrp_omni.git
+#### PitchBlack Recovery Project: https://github.com/PitchBlackRecoveryProject/manifest_pb.git
+#### SKYHAWK Recovery Project: https://github.com/SHRP/manifest.git

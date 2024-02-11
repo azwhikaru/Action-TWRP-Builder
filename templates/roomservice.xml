@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <!--project name="{COMMON_TREE_URL_REPO}" path="{COMMON_PATH}" remote="{COMMON_REMOTE_NAME}" revision="{COMMON_TREE_BRANCH}"/-->
   <!--project name="{DEVICE_TREE_URL_REPO}" path="{DEVICE_PATH}" remote="{DEVICE_REMOTE_NAME}" revision="{DEVICE_TREE_BRANCH}"/-->
 </manifest>

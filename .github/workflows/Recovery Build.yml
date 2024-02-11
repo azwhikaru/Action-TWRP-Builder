@@ -23,12 +23,6 @@ on:
         description: 'DEVICE_PATH'
         required: true
         default: 'device/asus/I003D'
-      COMMON_TREE_URL:
-        description: 'COMMON_TREE_URL (if no common tree, leave blank)'
-        required: false
-      COMMON_PATH:
-        description: 'COMMON_PATH (if no common tree, leave blank)'
-        required: false
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
@@ -123,32 +117,6 @@ jobs:
       run: |
         mkdir -p .repo/local_manifests
         cp -f ${GITHUB_WORKSPACE}/templates/roomservice.xml .repo/local_manifests/
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-
-    - name: Clone common tree (TeamWin)
-      if: |
-        contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' )
-        && github.event.inputs.COMMON_TREE_URL != null
-        && github.event.inputs.COMMON_PATH != null
-      run: |
-        sed -i "s%\!--project name=\"{COMMON_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
-        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/roomservice.xml
-        sed -i "s%{COMMON_REMOTE_NAME}%TeamWin%g" .repo/local_manifests/roomservice.xml
-        sed -i "s%{COMMON_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
-        repo sync -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-
-    - name: Clone common tree (Github)
-      if: |
-        !contains( github.event.inputs.COMMON_TREE_URL,'/TeamWin/' )
-        && github.event.inputs.COMMON_TREE_URL != null
-        && github.event.inputs.COMMON_PATH != null
-      run: |
-        sed -i "s%\!--project name=\"{COMMON_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.COMMON_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
-        sed -i "s%{COMMON_PATH}%${{ github.event.inputs.COMMON_PATH }}%g" .repo/local_manifests/roomservice.xml
-        sed -i "s%{COMMON_REMOTE_NAME}%github%g" .repo/local_manifests/roomservice.xml
-        sed -i "s%{COMMON_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
-        repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone device tree (TeamWin)
