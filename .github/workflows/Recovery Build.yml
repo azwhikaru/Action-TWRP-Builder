@@ -152,7 +152,9 @@ jobs:
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone device tree (TeamWin)
-      if: ${{ contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
+      if: |
+        contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' )
+        && steps.buildtree.outputs.value == 'twrp'
       run: |
         sed -i "s%\!--project name=\"{DEVICE_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/roomservice.xml
@@ -162,13 +164,21 @@ jobs:
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone device tree (Github)
-      if: ${{ !contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' ) }}
+      if: |
+        !contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' )
+        && steps.buildtree.outputs.value == 'twrp'
       run: |
         sed -i "s%\!--project name=\"{DEVICE_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_REMOTE_NAME}%github%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
         repo sync -j$(nproc --all)
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+
+    - name: Clone device tree (Omni)
+      if: ${{ steps.buildtree.outputs.value == 'omni' }}
+      run: |
+        git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Sync Device Dependencies (AOSP)
