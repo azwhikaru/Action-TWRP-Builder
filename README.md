@@ -62,7 +62,7 @@ Support PBRP, SHRP, TWRP compilation and production
 | `DEVICE_PATH` | Device location | device/asus/I003D |
 | `DEVICE_NAME` | Model name | I003D |
 | `REPOPICK_PATCHES` | Gerrit patches to include in build (space separated) | 1245 1437 |
-| `BUILD_TARGET` | Build Target Partition (boot/recovery/vendorboot) | recovery |
+| `BUILD_TARGET` | Build Target Partition (boot/recovery/vendor_boot) | recovery |
 
 -----
 

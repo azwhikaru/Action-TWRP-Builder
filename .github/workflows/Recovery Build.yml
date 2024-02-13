@@ -4,35 +4,35 @@ on:
   workflow_dispatch:
     inputs:
       MANIFEST_URL:
-        description: 'MANIFEST_URL (if using SSH keys, use git@github.com:repo URL format)'
+        description: 'Manifest URL (if using SSH keys, use git@github.com:repo URL format)'
         required: true
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
       MANIFEST_BRANCH:
-        description: 'MANIFEST_BRANCH'
+        description: 'Manifest Branch'
         required: true
         default: 'twrp-12.1'
       DEVICE_TREE_URL:
-        description: 'DEVICE_TREE_URL'
+        description: 'Device Tree URL'
         required: true
         default: 'https://github.com/TeamWin/android_device_asus_I003D'
       DEVICE_TREE_BRANCH:
-        description: 'DEVICE_TREE_BRANCH'
+        description: 'Device Tree Branch'
         required: true
         default: 'android-12.1'
       DEVICE_PATH:
-        description: 'DEVICE_PATH'
+        description: 'Path the device tree should be synced to, relative to source root'
         required: true
         default: 'device/asus/I003D'
       DEVICE_NAME:
-        description: 'DEVICE_NAME'
+        description: 'Device Name from tree (should match name on vendor_device.mk)'
         required: true
         default: 'I003D'
       REPOPICK_PATCHES:
-        description: 'REPOPICK_PATCHES (Gerrit commit numbers separated by a space to be included in the build)'
+        description: 'Gerrit commit numbers separated by a space to be included in the build'
         type: string
         required: false
       BUILD_TARGET:
-        description: 'BUILD_TARGET'
+        description: 'Partition containing recovery ramdisk (boot, recovery, vendor_boot)'
         required: true
         default: 'recovery'
 
@@ -192,7 +192,7 @@ jobs:
       run: |
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+        lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng && make $(tr -d _ <<< ${{ github.event.inputs.BUILD_TARGET }})image -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Upload to Release
