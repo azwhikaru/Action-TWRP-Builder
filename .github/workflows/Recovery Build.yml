@@ -32,7 +32,12 @@ on:
         type: string
         required: false
       BUILD_TARGET:
-        description: 'Partition containing recovery ramdisk (boot, recovery, vendor_boot)'
+        type: choice
+        description: 'Partition containing recovery ramdisk'
+        options:
+        - boot
+        - recovery
+        - vendor_boot
         required: true
         default: 'recovery'
 
