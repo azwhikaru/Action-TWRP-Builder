@@ -3,14 +3,18 @@ name: Recovery Build
 on:
   workflow_dispatch:
     inputs:
-      MANIFEST_URL:
-        description: 'Manifest URL (if using SSH keys, use git@github.com:repo URL format)'
-        required: true
-        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
       MANIFEST_BRANCH:
+        type: choice
         description: 'Manifest Branch'
+        options:
+        - 12.1
+        - 11
+        - 9.0
+        - 8.1
+        - 7.1
+        - 6.0
         required: true
-        default: 'twrp-12.1'
+        default: '12.1'
       DEVICE_TREE_URL:
         description: 'Device Tree URL'
         required: true
@@ -50,7 +54,6 @@ jobs:
     - name: Display Run Parameters
       run: |
         echo "::group::User Environment Variables"
-        echo "Manifest URL: ${{ github.event.inputs.MANIFEST_URL }}"
         echo "Manifest Branch: ${{ github.event.inputs.MANIFEST_BRANCH }}"
         echo "Device Tree URL: ${{ github.event.inputs.DEVICE_TREE_URL }}"
         echo "Device Tree Branch: ${{ github.event.inputs.DEVICE_TREE_BRANCH }}"
@@ -81,12 +84,13 @@ jobs:
         distribution: 'zulu'
         java-version: '8'
 
-    - name: Setup SSH Keys
-      if: ${{ startsWith(github.event.inputs.MANIFEST_URL, 'git@github.com') }}
-      uses: webfactory/ssh-agent@v0.5.4
+    - name: Check Build Tree
+      uses: haya14busa/action-cond@v1
+      id: buildtree
       with:
-          ssh-private-key: |
-              ${{ secrets.SSH_PRIVATE_KEY }}
+        cond: ${{ github.event.inputs.MANIFEST_BRANCH == '11' || github.event.inputs.MANIFEST_BRANCH == '12.1' }}
+        if_true: aosp
+        if_false: omni
 
     - name: Install repo
       run: |
@@ -99,67 +103,57 @@ jobs:
       run: |
         mkdir workspace
         cd workspace
-        echo "workspace-folder=$(pwd)" >> $GITHUB_OUTPUT
         git config --global user.name "Captain Throwback"
         git config --global user.email "captainthrowback@hotmail.com"
-        repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
-      id: pwd
+        repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_${{ steps.buildtree.outputs.value }}.git -b twrp-${{ github.event.inputs.MANIFEST_BRANCH }}
           
     - name: Repo Sync
       run: |
         repo sync -j$(nproc --all) --force-sync
       working-directory: workspace
 
-    - name: Check Build Tree
-      uses: haya14busa/action-cond@v1
-      id: buildtree
-      with:
-        cond: ${{ github.event.inputs.MANIFEST_BRANCH == 'twrp-11' || github.event.inputs.MANIFEST_BRANCH == 'twrp-12.1' }}
-        if_true: twrp
-        if_false: omni
-
     - name: Create roomservice.xml
       run: |
         mkdir -p .repo/local_manifests
         cp -f ${GITHUB_WORKSPACE}/templates/roomservice.xml .repo/local_manifests/
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      working-directory: workspace
 
     - name: Clone device tree (TeamWin)
       if: |
         contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' )
-        && steps.buildtree.outputs.value == 'twrp'
+        && steps.buildtree.outputs.value == 'aosp'
       run: |
         sed -i "s%\!--project name=\"{DEVICE_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=TeamWin/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_REMOTE_NAME}%TeamWin%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
         repo sync -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      working-directory: workspace
 
     - name: Clone device tree (Github)
       if: |
         !contains( github.event.inputs.DEVICE_TREE_URL,'/TeamWin/' )
-        && steps.buildtree.outputs.value == 'twrp'
+        && steps.buildtree.outputs.value == 'aosp'
       run: |
         sed -i "s%\!--project name=\"{DEVICE_TREE_URL_REPO}%project name=\"$(grep -oP '(?<=github.com/).*' <<< ${{ github.event.inputs.DEVICE_TREE_URL }})%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_PATH}%${{ github.event.inputs.DEVICE_PATH }}%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_REMOTE_NAME}%github%g" .repo/local_manifests/roomservice.xml
         sed -i "s%{DEVICE_TREE_BRANCH}\"/-->%${{ github.event.inputs.DEVICE_TREE_BRANCH }}\"/>%g" .repo/local_manifests/roomservice.xml
         repo sync -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      working-directory: workspace
 
     - name: Clone device tree (Omni)
       if: ${{ steps.buildtree.outputs.value == 'omni' }}
       run: |
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      working-directory: workspace
 
     - name: Sync Device Dependencies (AOSP)
-      if: ${{ steps.buildtree.outputs.value == 'twrp' }}
+      if: ${{ steps.buildtree.outputs.value == 'aosp' }}
       run: |
         source build/envsetup.sh
-        lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng
+      working-directory: workspace
       id: syncdevicedeps
       continue-on-error: true
 
@@ -170,7 +164,7 @@ jobs:
       run: |
         bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
         repo sync -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      working-directory: workspace
       continue-on-error: true
 
     - name: Set Swap Space
@@ -183,7 +177,7 @@ jobs:
       run: |
         source build/envsetup.sh
         repopick ${{ github.event.inputs.REPOPICK_PATCHES }}
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      working-directory: workspace
       continue-on-error: true
 
     - name: Install Python 2
@@ -193,12 +187,21 @@ jobs:
         cd /usr/bin
         sudo ln -sf python2 python
 
-    - name: Building recovery
+    - name: Building recovery (AOSP)
+      if: ${{ steps.buildtree.outputs.value == 'aosp' }} 
       run: |
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng && make $(tr -d _ <<< ${{ github.event.inputs.BUILD_TARGET }})image -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make $(tr -d _ <<< ${{ github.event.inputs.BUILD_TARGET }})image -j$(nproc --all)
+      working-directory: workspace
+
+    - name: Building recovery (Omni)
+      if: ${{ steps.buildtree.outputs.value == 'omni' }} 
+      run: |
+        source build/envsetup.sh
+        export ALLOW_MISSING_DEPENDENCIES=true
+        lunch ${{ steps.buildtree.outputs.value }}_${{ github.event.inputs.DEVICE_NAME }}-eng && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+      working-directory: workspace
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1

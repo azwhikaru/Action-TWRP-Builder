@@ -1,11 +1,17 @@
-# Use Github Action to compile Recovery
+# Use Github Actions to compile Recovery
 ```
-Support PBRP, SHRP, TWRP compilation and production
+Support TWRP compilation and production
+(PBRP, SHRP, & OrangeFox support are WIP)
 ```
 ---
 
 ## Release Notes
 ```
+= 2024-02-12
+- Split custom builds into separate branches (TWRP is default, others are WIP)
+- Simplify manifest branch selection and remove URL input
+- Remove SSH support
+
 = 2024/02/11
 - Fix support for dependencies in AOSP trees
 - Increase swap size for kernel inline builds
@@ -55,8 +61,7 @@ Support PBRP, SHRP, TWRP compilation and production
 
 | Name | Description | Example |
 | ------------ | -------------------- | ------------ |
-| `MANIFEST_URL` | Source address | https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git |
-| `MANIFEST_BRANCH` | Source branch | twrp-12.1 |
+| `MANIFEST_BRANCH` | Source branch | 12.1 |
 | `DEVICE_TREE_URL` | Device address | https://github.com/TeamWin/android_device_asus_I003D |
 | `DEVICE_TREE_BRANCH` | Device branch | android-12.1 |
 | `DEVICE_PATH` | Device location | device/asus/I003D |
@@ -66,54 +71,21 @@ Support PBRP, SHRP, TWRP compilation and production
 
 -----
 
-## how to use
+## Usage Instructions
 ```
-For example, your username is: Fun-114514
+For example, your username is: Run-114514
 ```
-#### 1. Click'Fork' in the upper right corner of this warehouse
+#### 1. Click'Fork' in the upper right corner of this repo
 ![](https://i.bmp.ovh/imgs/2021/10/6b6ed9f29e732372.png)
 #### 2. After waiting for the automatic redirection, you will see your own username
 ![](https://i.bmp.ovh/imgs/2021/10/66cfe324c0ebb69b.png)
-#### 3. Change the [username and email](https://github.com/CaptainThrowback/Action-Recovery-Builder/blob/main/.github/workflows/Recovery%20Build.yml#L100-L101) in the workflow to reflect your Github credentials
-## Setting up SSH Keys (optional)
-#### 4. Go to Settings, then select Deploy keys and select "Add deploy key" button.
-
-#### 5. On your Android device, install [Termux](https://github.com/termux/termux-app/releases)
-
-#### 6. Install openssh in Termux and generate ssh keys. (Do not use passphrase for keys)
-NOTE: When creating the deploy key for a repository like git@github.com:owner/repo.git or https://github.com/owner/repo, put that URL into the key comment. (Hint: Try ssh-keygen ... -C "git@github.com:owner/repo.git".)
-owner = your Github username
-```
-pkg install openssh
-ssh-keygen -t ed25519 -C "git@github.com:owner/Action-Recovery-Builder.git"
-```
-#### 7. Add the keys to your repo. In Termux, use the following commands:
-```
-cd /data/data/com.termux/files/usr/etc/ssh
-cat ssh_host_ed25519_key.pub
-```
-  Select and copy the key then paste in the box for Key.
-  You can name it whatever you choose for the title.
-
-#### 8. Now to add your private ssh key. Back in Termux:
-```
-cat ssh_host_ed25519_key
-```
-   Copy the output from Termux.
-
-   In your browser, select *Secrets* under the Security tab.
-   Select Actions
-   Select New repository secret
-   For the New secret name, it should be SSH_PRIVATE_KEY
-   Paste the output from ssh_host_ed25519_key into the Value box.
-   Then select Add secret.
-
+#### 3. Change the [username and email](https://github.com/CaptainThrowback/Action-Recovery-Builder/blob/main/.github/workflows/Recovery%20Build.yml#L106-L107) in the workflow to reflect your Github credentials
 ## Building the Recovery
-#### 9. Click'Actions-Recovery Build'
+#### 4. Click'Actions-Recovery Build'
 ![](https://i.bmp.ovh/imgs/2021/10/23896d1b66292047.png)
-#### 10. Click'Run workflow' and fill in according to the above'parameter description'
+#### 5. Click'Run workflow' and fill in according to the above'parameter description'
 ![](https://i.bmp.ovh/imgs/2021/10/9cb7871267cf2f53.png)
-#### 11. After filling in, click'Run workflow' to start running
+#### 6. After filling in, click'Run workflow' to start running
 
 -----
 
