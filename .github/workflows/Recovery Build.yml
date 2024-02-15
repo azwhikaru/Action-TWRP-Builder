@@ -210,13 +210,13 @@ jobs:
           workspace/out/target/product/${{ inputs.DEVICE_NAME }}/${{ inputs.BUILD_TARGET }}.img
           workspace/out/target/product/${{ inputs.DEVICE_NAME }}/obj/PACKAGING/vendor_ramdisk_fragments_intermediates/recovery.*
           workspace/out/target/product/${{ inputs.DEVICE_NAME }}/ramdisk-recovery.*
-        name: |
-          TWRP for ${{ inputs.DEVICE_NAME }}
+        name: >
+          ${{ inputs.DEVICE_NAME }} (TWRP)
+          
           Run ID: ${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: |
           Manifest: ${{ inputs.MANIFEST_BRANCH }}
-          Device: ${{ inputs.DEVICE_NAME }}
           Target: ${{ inputs.BUILD_TARGET }}.img
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
