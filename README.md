@@ -7,6 +7,12 @@ Support TWRP compilation and production
 
 ## Release Notes
 ```
+= 2024-02-16
+- Clarify options in README
+
+= 2024-02-15
+- Add option to include recovery installer
+
 = 2024-02-12
 - Split custom builds into separate branches (TWRP is default, others are WIP)
 - Simplify manifest branch selection and remove URL input
@@ -62,11 +68,11 @@ Support TWRP compilation and production
 | Name | Description | Example |
 | ------------ | -------------------- | ------------ |
 | `MANIFEST_BRANCH` | Source branch | 12.1 |
-| `DEVICE_TREE_URL` | Device address | https://github.com/TeamWin/android_device_asus_I003D |
-| `DEVICE_TREE_BRANCH` | Device branch | android-12.1 |
-| `DEVICE_PATH` | Device location | device/asus/I003D |
-| `DEVICE_NAME` | Model name | I003D |
-| `REPOPICK_PATCHES` | Gerrit patches to include in build (space separated) | 1245 1437 |
+| `DEVICE_TREE_URL` | Device tree address | https://github.com/TeamWin/android_device_asus_I003D |
+| `DEVICE_TREE_BRANCH` | Device branch that you want to use for build (typically corresponds to the manifest branch) | android-12.1 |
+| `DEVICE_PATH` | Device tree location for syncing, relative to workspace root (usually listed as "LOCAL_PATH" or "DEVICE_PATH" in BoardConfig.mk) | device/asus/I003D |
+| `DEVICE_NAME` | Model name (same as twrp_<DEVICE_NAME>.mk from device tree | I003D |
+| `REPOPICK_PATCHES` | (Optional) Gerrit patches to include in build (space separated) - if you don't know what this means, then leave blank | 1245 1437 |
 | `BUILD_TARGET` | Build Target Partition (boot/recovery/vendor_boot) | recovery |
 
 -----

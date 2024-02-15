@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <project name="osm0sis/twrp_abtemplate" path="bootable/recovery/installer" remote="github" revision="master" />
+</manifest>
