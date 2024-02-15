@@ -70,6 +70,11 @@ jobs:
       uses: rokibhasansagar/slimhub_actions@main
       # That's it! Now use your normal steps
 
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 24
+
     - name: Prepare the environment
       run: |
         sudo apt update
@@ -166,11 +171,6 @@ jobs:
         repo sync -j$(nproc --all)
       working-directory: workspace
       continue-on-error: true
-
-    - name: Set Swap Space
-      uses: pierotofy/set-swap-space@master
-      with:
-        swap-size-gb: 24
 
     - name: Repopick Gerrit patches
       if: inputs.REPOPICK_PATCHES != null
