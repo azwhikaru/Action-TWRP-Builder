@@ -1,12 +1,16 @@
 # Use Github Actions to compile Recovery
 ```
-Support TWRP compilation and production
-(PBRP, SHRP, & OrangeFox support are WIP)
+Support TWRP & OrangeFox compilation and production
+(PBRP & SHRP support are WIP)
 ```
 ---
 
 ## Release Notes
 ```
+= 2024-02-16
+- Remove requirement to set git credentials
+- Fix OrangeFox build
+
 = 2024-02-16
 - Clarify options in README
 
@@ -81,17 +85,16 @@ Support TWRP compilation and production
 ```
 For example, your username is: Run-114514
 ```
-#### 1. Click'Fork' in the upper right corner of this repo
+#### 1. Click 'Fork' in the upper right corner of this repo
 ![](https://i.bmp.ovh/imgs/2021/10/6b6ed9f29e732372.png)
 #### 2. After waiting for the automatic redirection, you will see your own username
 ![](https://i.bmp.ovh/imgs/2021/10/66cfe324c0ebb69b.png)
-#### 3. Change the [username and email](https://github.com/CaptainThrowback/Action-Recovery-Builder/blob/main/.github/workflows/Recovery%20Build.yml#L106-L107) in the workflow to reflect your Github credentials
 ## Building the Recovery
-#### 4. Click'Actions-Recovery Build'
+#### 3. Click 'Actions-Recovery Build'
 ![](https://i.bmp.ovh/imgs/2021/10/23896d1b66292047.png)
-#### 5. Click'Run workflow' and fill in according to the above'parameter description'
+#### 4. Click 'Run workflow' and fill in according to the above 'parameter description'
 ![](https://i.bmp.ovh/imgs/2021/10/9cb7871267cf2f53.png)
-#### 6. After filling in, click'Run workflow' to start running
+#### 5. After filling in, click'Run workflow' to start running
 
 -----
 
@@ -102,5 +105,6 @@ Can be downloaded at [Release](../../releases)
 ## Remark
 
 #### TeamWin Recovery Project: https://github.com/minimal-manifest-twrp
+#### OrangeFox Recovery: https://gitlab.com/OrangeFox/sync.git
 #### PitchBlack Recovery Project: https://github.com/PitchBlackRecoveryProject/manifest_pb.git
 #### SKYHAWK Recovery Project: https://github.com/SHRP/manifest.git
