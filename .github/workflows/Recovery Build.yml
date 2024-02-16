@@ -5,7 +5,7 @@ on:
     inputs:
       MANIFEST_BRANCH:
         type: choice
-        description: 'Manifest Branch'
+        description: Manifest Branch
         options:
         - 12.1
         - 11
@@ -14,38 +14,38 @@ on:
         - 7.1
         - 6.0
         required: true
-        default: '12.1'
+        default: 12.1
       DEVICE_TREE_URL:
-        description: 'Device Tree URL'
+        description: Device Tree URL
         required: true
-        default: 'https://github.com/TeamWin/android_device_asus_I003D'
+        default: https://github.com/TeamWin/android_device_asus_I003D
       DEVICE_TREE_BRANCH:
-        description: 'Device Tree Branch'
+        description: Device Tree Branch
         required: true
-        default: 'android-12.1'
+        default: android-12.1
       DEVICE_PATH:
-        description: 'Path the device tree should be synced to, relative to source root'
+        description: Path the device tree should be synced to, relative to source root
         required: true
-        default: 'device/asus/I003D'
+        default: device/asus/I003D
       DEVICE_NAME:
-        description: 'Device Name from tree (should match name on twrp_<DEVICE_NAME>.mk)'
+        description: Device Name from tree (should match name on twrp_<DEVICE_NAME>.mk)
         required: true
-        default: 'I003D'
+        default: I003D
       REPOPICK_PATCHES:
-        description: '(Optional) Gerrit commit numbers separated by a space to be included in the build (leave blank if not using)'
+        description: (Optional) Gerrit commit numbers separated by a space to be included in the build (leave blank if not using)
         type: string
         required: false
       BUILD_TARGET:
         type: choice
-        description: 'Partition containing recovery ramdisk'
+        description: Partition containing recovery ramdisk
         options:
         - boot
         - recovery
         - vendor_boot
         required: true
-        default: 'recovery'
+        default: recovery
       RECOVERY_INSTALLER:
-        description: 'Include recovery installer zip'
+        description: Include recovery installer zip
         type: boolean
         required: true
         default: false
@@ -70,7 +70,8 @@ jobs:
  
     # You might want to Checkout your repo first, but not mandatory
     - name: Check Out
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+            
     # Cleanup The Actions Workspace Using Custom Composite Run Actions
     - name: Cleanup
       uses: rokibhasansagar/slimhub_actions@main
@@ -90,13 +91,13 @@ jobs:
         sudo apt -y install libncurses5
 
     - name: Install OpenJDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
-        distribution: 'zulu'
-        java-version: '8'
+        distribution: zulu
+        java-version: 8
 
     - name: Check Build Tree
-      uses: haya14busa/action-cond@v1
+      uses: haya14busa/action-cond@v1.2.1
       id: buildtree
       with:
         cond: ${{ inputs.MANIFEST_BRANCH == '11' || inputs.MANIFEST_BRANCH == '12.1' }}
@@ -244,7 +245,7 @@ jobs:
       working-directory: workspace
 
     - name: Upload to Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@4634c16e79c963813287e889244c50009e7f0981
       with:
         files: |
           workspace/out/target/product/${{ inputs.DEVICE_NAME }}/${{ inputs.BUILD_TARGET }}.img
