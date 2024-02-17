@@ -90,12 +90,6 @@ jobs:
         sudo add-apt-repository universe
         sudo apt -y install libncurses5
 
-    - name: Install OpenJDK
-      uses: actions/setup-java@v4
-      with:
-        distribution: zulu
-        java-version: 8
-
     - name: Check Build Tree
       uses: haya14busa/action-cond@v1.2.1
       id: buildtree
@@ -103,6 +97,13 @@ jobs:
         cond: ${{ inputs.MANIFEST_BRANCH == '11' || inputs.MANIFEST_BRANCH == '12.1' }}
         if_true: aosp
         if_false: omni
+
+    - name: Install OpenJDK
+      if: steps.buildtree.outputs.value == 'omni'
+      uses: actions/setup-java@v4
+      with:
+        distribution: zulu
+        java-version: 8
 
     - name: Install repo
       run: |
