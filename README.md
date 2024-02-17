@@ -1,12 +1,16 @@
-# Use Github Actions to compile Recovery
+# Use Github Actions to compile Custom Recovery
 ```
-Support TWRP & OrangeFox compilation and production
-(PBRP & SHRP support are WIP)
+Supports TWRP, OrangeFox, PBRP & SHRP compilation and production
 ```
 ---
 
 ## Release Notes
 ```
+= 2024-02-17
+- Add PBRP support
+- Add SHRP support
+- Update README to support all branches
+
 = 2024-02-16
 - Remove requirement to set git credentials
 - Fix OrangeFox build
@@ -68,6 +72,7 @@ Support TWRP & OrangeFox compilation and production
 -----
 
 ## Parameter Description
+(not all branches require/support all of the below fields)
 
 | Name | Description | Example |
 | ------------ | -------------------- | ------------ |
@@ -75,9 +80,11 @@ Support TWRP & OrangeFox compilation and production
 | `DEVICE_TREE_URL` | Device tree address | https://github.com/TeamWin/android_device_asus_I003D |
 | `DEVICE_TREE_BRANCH` | Device branch that you want to use for build (typically corresponds to the manifest branch) | android-12.1 |
 | `DEVICE_PATH` | Device tree location for syncing, relative to workspace root (usually listed as "LOCAL_PATH" or "DEVICE_PATH" in BoardConfig.mk) | device/asus/I003D |
-| `DEVICE_NAME` | Model name (same as twrp_<DEVICE_NAME>.mk from device tree | I003D |
+| `DEVICE_NAME` | Model name (same as twrp_`<DEVICE_NAME>`.mk from device tree) | I003D |
+| `DEVICE_MAKEFILE` | Name of device-specific makefile from tree (format: `<PREFIX>_<DEVICE_NAME>`) | twrp_I003D
 | `REPOPICK_PATCHES` | (Optional) Gerrit patches to include in build (space separated) - if you don't know what this means, then leave blank | 1245 1437 |
 | `BUILD_TARGET` | Build Target Partition (boot/recovery/vendor_boot) | recovery |
+| `RECOVERY_INSTALLER` | Include recovery installer zip | no |
 
 -----
 
@@ -92,9 +99,9 @@ For example, your username is: Run-114514
 ## Building the Recovery
 #### 3. Click 'Actions-Recovery Build'
 ![](https://i.bmp.ovh/imgs/2021/10/23896d1b66292047.png)
-#### 4. Click 'Run workflow' and fill in according to the above 'parameter description'
+#### 4. Click 'Run workflow', choose the branch for the recovery that you want to build, and fill in according to the above 'Parameter Description'
 ![](https://i.bmp.ovh/imgs/2021/10/9cb7871267cf2f53.png)
-#### 5. After filling in, click'Run workflow' to start running
+#### 5. After filling in, click 'Run workflow' to start running
 
 -----
 
@@ -102,7 +109,7 @@ For example, your username is: Run-114514
 Can be downloaded at [Release](../../releases)
 
 -----
-## Remark
+## Reference
 
 #### TeamWin Recovery Project: https://github.com/minimal-manifest-twrp
 #### OrangeFox Recovery: https://gitlab.com/OrangeFox/sync.git
