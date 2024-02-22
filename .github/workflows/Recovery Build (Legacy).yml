@@ -12,7 +12,7 @@ on:
         required: true
         default: 'twrp-7.1'
       DEVICE_TREE_URL:
-        description: 'DEVICE_TREE_URL'
+        description: 'https://github.com/twrpdtgen/android_device_motorola_tb8789p1_64'
         required: true
         default: 'https://github.com/ycly2333/android_device_EEBBK_H3000S-twrp'
       DEVICE_TREE_BRANCH:
@@ -30,7 +30,7 @@ on:
         description: 'COMMON_PATH (if no common tree, leave blank)'
         required: false
       DEVICE_NAME:
-        description: 'DEVICE_NAME'
+        description: 'mototabg70lte'
         required: true
         default: 'H3000S'
       MAKEFILE_NAME:
@@ -40,7 +40,7 @@ on:
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
-        default: 'recovery'
+        default: 'boot'
 
 jobs:
   build:
