@@ -6,6 +6,10 @@ Supports TWRP, OrangeFox, PBRP & SHRP compilation and production
 
 ## Release Notes
 ```
+= 2024-02-23
+- [OrangeFox] Add input field for additional/optional flags
+- [OrangeFox] Add fixes for some unique device trees
+
 = 2024-02-17
 - Add PBRP support
 - Add SHRP support
@@ -85,6 +89,7 @@ Supports TWRP, OrangeFox, PBRP & SHRP compilation and production
 | `REPOPICK_PATCHES` | (Optional) Gerrit patches to include in build (space separated) - if you don't know what this means, then leave blank | 1245 1437 |
 | `BUILD_TARGET` | Build Target Partition (boot/recovery/vendor_boot) | recovery |
 | `RECOVERY_INSTALLER` | Include recovery installer zip | no |
+| `OPTIONAL_FLAGS` | Additional/custom build commands should be entered here | export FOX_VIRTUAL_AB_DEVICE=1 |
 
 -----
 
