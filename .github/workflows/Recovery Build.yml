@@ -18,19 +18,19 @@ on:
       DEVICE_TREE_URL:
         description: Device Tree URL
         required: true
-        default: https://github.com/TeamWin/android_device_asus_I003D
+        default: https://github.com/valerydelinois/android_device_samsung_a32x
       DEVICE_TREE_BRANCH:
         description: Device Tree Branch
         required: true
-        default: android-12.1
+        default: a32xktt-user-12-SP1A.210812.016-A326KKSU4DWB7-release-keys
       DEVICE_PATH:
         description: Path the device tree should be synced to, relative to source root
         required: true
-        default: device/asus/I003D
+        default: device/samsung/a32x
       DEVICE_NAME:
         description: Device Name from tree (should match name on twrp_<DEVICE_NAME>.mk)
         required: true
-        default: I003D
+        default: a32x
       REPOPICK_PATCHES:
         description: (Optional) Gerrit commit numbers separated by a space to be included in the build (leave blank if not using)
         type: string
@@ -260,3 +260,4 @@ jobs:
           Target: ${{ inputs.BUILD_TARGET }}.img
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
