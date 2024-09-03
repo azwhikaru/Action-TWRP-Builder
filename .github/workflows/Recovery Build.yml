@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       MANIFEST_URL:
-        description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
+        description: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
         required: true
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
       MANIFEST_BRANCH:
@@ -12,7 +12,7 @@ on:
         required: true
         default: 'twrp-12.1'
       DEVICE_TREE_URL:
-        description: 'DEVICE_TREE_URL'
+        description: 'https://github.com/twrpdtgen/android_device_infinix_Infinix-X6823C'
         required: true
         default: 'https://github.com/TeamWin/android_device_asus_I003D'
       DEVICE_TREE_BRANCH:
@@ -20,7 +20,7 @@ on:
         required: true
         default: 'android-12.1'
       DEVICE_PATH:
-        description: 'DEVICE_PATH'
+        description: 'device/infinix/Infinix-X6823C'
         required: true
         default: 'device/asus/I003D'
       COMMON_TREE_URL:
@@ -30,15 +30,15 @@ on:
         description: 'COMMON_PATH (if no common tree, leave blank)'
         required: false
       DEVICE_NAME:
-        description: 'DEVICE_NAME'
+        description: 'Infinix-X6823C'
         required: true
         default: 'I003D'
       MAKEFILE_NAME:
-        description: 'MAKEFILE_NAME'
+        description: 'twrp_Infinix-X6823C'
         required: true
         default: 'twrp_I003D'
       BUILD_TARGET:
-        description: 'BUILD_TARGET'
+        description: 'boot'
         required: true
         default: 'recovery'
 
