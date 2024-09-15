@@ -18,11 +18,7 @@
 	- No rule to make ...
 	- Image ... out of size
 
-## Thanks to
-
-All contributors
-
-## Parameter Description
+### Parameter Description
 
 | Name                 | Description                                       | Example                                                      |
 | -------------------- | ------------------------------------------------- | ------------------------------------------------------------ |
